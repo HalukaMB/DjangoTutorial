@@ -1,0 +1,23 @@
+<h1>{{ question.question_text }}</h1>
+
+<!--if error, then return the error message in strong-->
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<!--this is a form with the post method that upon triggering does the action -->
+<!--of going to the url.py checking there what is defined under the app polls -->
+<!--with the name "vote" and posts it to the page with the question.id-->
+<form action="{% url 'polls:vote' question.id %}" method="post">
+<!--preventing crossside-forgery-->
+  {% csrf_token %}
+
+<!--for each choice that is attached to the question...!-->
+{% for choice in question.choice_set.all %}
+  <!--there will be a radio button with the name choice and the id and the label "choice plus counter"-->
+  <!--also the value will be the choices id and the text related to this choice in the database-->
+
+  <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}" />
+  <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br />
+{% endfor %}
+<!--Finally there is the submit button-->
+<input type="submit" value="Vote" />
+</form>

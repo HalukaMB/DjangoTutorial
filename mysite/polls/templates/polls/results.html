@@ -1,0 +1,15 @@
+<!--here the question's text is loaded-->
+
+<h1>{{ question.question_text }}</h1>
+<p>hi there</p>
+</p>
+<ul>
+  <!--goes through each choice-->
+{% for choice in question.choice_set.all %}
+    <!--puts out the choices text and the number of votes
+  thanks to pluralize it adds an "s" to vote, if it is more than one-->
+    <li>{{ choice.choice_text }} -- {{ choice.votes }} vote{{choice.votes|pluralize }}</li>
+{% endfor %}
+</ul>
+
+<a href="{% url 'polls:detail' question.id %}">Vote again?</a>
